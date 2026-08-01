@@ -206,6 +206,33 @@ header.hero::before {
     background: var(--pink-deep);
 }
 
+.hero-slide-numbers {
+    display: flex;
+    gap: 22px;
+    margin-top: 34px;
+}
+
+.hero-slide-numbers button {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.hero-slide-numbers button:hover {
+    color: var(--pink-strong);
+}
+
+.hero-slide-numbers button.active {
+    color: var(--pink-strong);
+}
+
 .hero-image {
     position: relative;
     flex: 1 1 380px;
