@@ -1,60 +1,70 @@
 /////////////////////////////////////////////
 // Import Our Dependencies
 /////////////////////////////////////////////
-require("dotenv").config();
-const express = require("express");
+require("dotenv").config()
+const path = require('path');
+const express = require('express');
 const morgan = require("morgan");
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
-const methodOverride = require("method-override");
-const authRoutes = require("./routes/authRoutes.js");
-const cookieParser = require("cookie-parser");
-const { requireAuth, checkUser } = require("./middleware/auth.js");
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const methodOverride = require("method-override")
+const authRoutes = require('./routes/authRoutes.js');
+const cookieParser = require('cookie-parser');
+const { requireAuth, checkUser } = require('./middleware/auth.js');
 
 const app = express();
 
 /////////////////////////////////////////////////////
 // Middleware
 /////////////////////////////////////////////////////
-app.use(morgan("tiny")); //logging
-app.use(methodOverride("_method")); // override for put and delete requests from forms
-app.use(express.urlencoded({ extended: true })); // parse urlencoded request bodies
-app.use(express.static("public"));
+app.use(morgan("tiny")) //logging
+app.use(methodOverride("_method")) // override for put and delete requests from forms
+app.use(express.urlencoded({extended: true})) // parse urlencoded request bodies
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cookieParser());
 
 // view engine
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 /////////////////////////////////////////////
 // Database Connection
 /////////////////////////////////////////////
 const dbURI = process.env.MONGODB_URI;
 const CONFIG = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+}
 
 // Establish Connection
-mongoose
-  .connect(dbURI, CONFIG)
-  .catch((err) => console.log("Mongo connection failed:", err.message));
+mongoose.connect(dbURI, CONFIG)
+	.catch((err) => console.log('Mongo connection failed:', err.message));
 // Events for when connection opens/disconnects/errors
 mongoose.connection
-  .on("open", () => console.log("Connected to Mongoose"))
-  .on("close", () => console.log("Disconnected from Mongoose"))
-  .on("error", (error) => console.log(error));
+.on("open", () => console.log("Connected to Mongoose"))
+.on("close", () => console.log("Disconnected from Mongoose"))
+.on("error", (error) => console.log(error))
 
 //////////////////////////////////////////////
 // Routes
 //////////////////////////////////////////////
-app.get("*", checkUser); //apply check user middleware to every single get request and shows user in the header
+app.get('*', checkUser); //apply check user middleware to every single get request and shows user in the header
 app.use(authRoutes);
-app.get("/", (req, res) => res.render("home"));
-app.get("/milkshakes", requireAuth, (req, res) => res.render("milkshakes"));
+app.get('/', (req, res) => res.render('home'));
+app.get('/milkshakes', requireAuth, (req, res) => res.render('milkshakes'));
 
 //////////////////////////////////////////////
 // Server Listener
 //////////////////////////////////////////////
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Now Listening on port ${PORT}`));
+const PORT = process.env.PORT || 3000
+
+// Only start a listening server when this file is run directly
+// (e.g. `node app.js` or `npm run dev`). When Vercel requires this
+// module from api/index.js, we just export the app instead —
+// Vercel's runtime handles the actual HTTP server.
+if (require.main === module) {
+	app.listen(PORT, () => console.log(`Now Listening on port ${PORT}`))
+}
+
+module.exports = app;

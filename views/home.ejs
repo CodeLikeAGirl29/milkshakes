@@ -6,12 +6,42 @@
                 <h2>Milkshakes</h2>
                 <p>Hand-blended the old-fashioned way &mdash; real ice cream, real milk, and a handful of classic mix-ins. No shortcuts, no syrups from a gun.</p>
                 <a href="/milkshakes" class="btn">View Recipes</a>
+                <ul class="hero-slide-numbers" data-hero-numbers>
+                    <li><button type="button" class="active" data-slide="0">01</button></li>
+                    <li><button type="button" data-slide="1">02</button></li>
+                    <li><button type="button" data-slide="2">03</button></li>
+                    <li><button type="button" data-slide="3">04</button></li>
+                </ul>
             </div>
             <div class="hero-image">
-                <img src="/MILKSHAKES.png" alt="Assortment of Cold Stone Creamery milkshakes">
+                <img src="/strawberry.png" alt="Assortment of Cold Stone Creamery milkshakes" data-hero-image
+                     data-slides="/strawberry.png,/choc-shake.png,/vanilla.png,/bday-cake.png">
             </div>
         </div>
     </header>
+
+    <script>
+        (function () {
+            var img = document.querySelector('[data-hero-image]');
+            var numbers = document.querySelectorAll('[data-hero-numbers] button');
+            var slides = img.dataset.slides.split(',');
+            var current = 0;
+
+            function showSlide(index) {
+                current = index;
+                img.src = slides[current];
+                numbers.forEach(function (btn) {
+                    btn.classList.toggle('active', Number(btn.dataset.slide) === current);
+                });
+            }
+
+            numbers.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    showSlide(Number(btn.dataset.slide));
+                });
+            });
+        })();
+    </script>
 
     <section class="about">
         <div class="wrap">
@@ -33,12 +63,12 @@
         <div class="wrap section-head">
             <h3>Our Featured Milkshakes</h3>
             <div class="rule"></div>
-            <p>Five classics, blended fresh to order</p>
+            <p>Six classics, blended fresh to order</p>
         </div>
         <ul class="recipes">
             <li class="recipe">
                 <div class="recipe-media">
-                    <img src="/milkshake.png" alt="Very Strawberry milkshake">
+                    <img src="/strawberry.png" alt="Very Strawberry milkshake">
                 </div>
                 <div class="recipe-body">
                     <h4>Very Strawberry</h4>
@@ -68,11 +98,11 @@
             </li>
             <li class="recipe">
                 <div class="recipe-media">
-                    <img src="/pb.png" alt="Peanut Butter milkshake">
+                    <img src="/bday-cake.png" alt="Birthday Cake milkshake">
                 </div>
                 <div class="recipe-body">
-                    <h4>Peanut Butter</h4>
-                    <p>Vanilla ice cream blended with creamy peanut butter and a hint of vanilla.</p>
+                    <h4>Birthday Cake</h4>
+                    <p>A velvety blend of yellow cake, sweet cream, and rainbow sprinkles. Sip your slice of cake and let the celebration begin!</p>
                     <a href="/milkshakes" class="btn">View Recipe</a>
                 </div>
             </li>
@@ -83,6 +113,16 @@
                 <div class="recipe-body">
                     <h4>Peppermint Bark Float</h4>
                     <p>Peppermint bark ice cream, cocoa, and dark chocolate over whole milk.</p>
+                    <a href="/milkshakes" class="btn">View Recipe</a>
+                </div>
+            </li>
+            <li class="recipe">
+                <div class="recipe-media">
+                    <img src="/mint.png" alt="Mint Chocolate Chip milkshake">
+                </div>
+                <div class="recipe-body">
+                    <h4>Mint Chocolate Chip</h4>
+                    <p>A cool, creamy blend of refreshing peppermint ice cream and rich dark chocolate flakes that delivers a perfectly crisp bite in every sweet sip.</p>
                     <a href="/milkshakes" class="btn">View Recipe</a>
                 </div>
             </li>
