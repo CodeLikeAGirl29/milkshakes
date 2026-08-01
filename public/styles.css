@@ -41,14 +41,26 @@ body {
     background: var(--surface);
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: var(--font-display);
     font-weight: 700;
     margin: 0;
     color: var(--ink);
 }
 
-ul, li, a, p, input, label, button, div, footer, textarea {
+ul,
+li,
+a,
+p,
+input,
+label,
+button,
+div,
+footer,
+textarea {
     margin: 0;
     padding: 0;
     font-family: var(--font-body);
@@ -259,7 +271,7 @@ header.hero::before {
     width: 100%;
     max-width: 420px;
     height: 420px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: var(--radius-md);
     display: block;
 }
@@ -809,6 +821,7 @@ footer.site-footer h3 {
    ============================================================ */
 
 @media (max-width: 960px) {
+
     .recipes,
     .service-grid {
         grid-template-columns: repeat(2, 1fr);
